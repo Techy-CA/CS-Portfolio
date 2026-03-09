@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline — Chinmay Sugandhi</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: monospace;
+      background: #f4f1eb;
+      color: #1a1a1a;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .dot-grid {
+      position: fixed; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(26,26,26,0.1) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    .corner {
+      position: fixed; width: 40px; height: 40px; pointer-events: none;
+    }
+    .corner.tl { top:20px; left:20px; border-top:2px solid #e63946; border-left:2px solid #e63946; }
+    .corner.br { bottom:20px; right:20px; border-bottom:2px solid #e63946; border-right:2px solid #e63946; }
+
+    /* ── Terminal card ── */
+    .terminal {
+      position: relative; z-index: 10;
+      width: min(520px, calc(100vw - 32px));
+      border: 2px solid #1a1a1a;
+      box-shadow: 6px 6px 0 #e63946;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* Title bar — dark like portfolio navbar */
+    .term-bar {
+      background: #1a1a1a;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .dot { width:10px; height:10px; border-radius:50%; }
+    .dot.r { background: #e63946; }
+    .dot.y { background: #f4a261; }
+    .dot.g { background: #2a9d8f; }
+    .term-name {
+      font-size: 0.58rem; color: #555;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-left: 8px;
+    }
+
+    /* Body — cream bg */
+    .term-body {
+      background: #faf8f4;
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid #ede9e2;
+    }
+
+    .line {
+      font-size: clamp(0.68rem, 2vw, 0.74rem);
+      line-height: 1.95;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .line.show { opacity: 1; }
+
+    .prompt  { color: #1a1a1a; font-weight: 700; }
+    .path    { color: #e63946; }
+    .dim     { color: #bbb; }
+    .cmd     { color: #1a1a1a; }
+    .success { color: #2a9d5c; }
+    .warn    { color: #f4a261; }
+    .err     { color: #e63946; font-weight: 700; }
+    .muted   { color: #aaa; }
+
+    .cursor {
+      display: inline-block;
+      width: 7px; height: 12px;
+      background: #e63946;
+      animation: blink 0.85s step-end infinite;
+      vertical-align: middle; margin-left: 2px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* Retry button — matches portfolio btn-primary */
+    .btn-wrap {
+      padding: 16px 20px;
+      background: #faf8f4;
+    }
+    .btn {
+      font-family: monospace; font-size: 0.75rem;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 10px 24px;
+      background: #1a1a1a; color: #f4f1eb;
+      border: 2px solid #1a1a1a;
+      box-shadow: 4px 4px 0 #e63946;
+      cursor: pointer; transition: all 0.15s;
+      display: inline-block; text-decoration: none;
+    }
+    .btn:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 6px 6px 0 #e63946;
+    }
+
+    .badge {
+      text-align: center;
+      padding: 8px;
+      background: #f4f1eb;
+      border-top: 1px solid #ede9e2;
+      font-size: 0.55rem; color: #bbb;
+      text-transform: uppercase; letter-spacing: 0.14em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dot-grid"></div>
+  <div class="corner tl"></div>
+  <div class="corner br"></div>
+
+  <div class="terminal">
+
+    <div class="term-bar">
+      <span class="dot r"></span>
+      <span class="dot y"></span>
+      <span class="dot g"></span>
+      <span class="term-name">zsh · portfolio · ~/chinmay</span>
+    </div>
+
+    <div class="term-body" id="body">
+
+      <div class="line" id="l0">
+        <span class="prompt">chinmay@portfolio</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span class="cmd">ping google.com</span>
+      </div>
+      <div class="line" id="l1">
+        <span class="warn">PING google.com — waiting for response...</span>
+      </div>
+      <div class="line" id="l2">
+        <span class="err">Request timeout for icmp_seq 0</span>
+      </div>
+      <div class="line" id="l3">
+        <span class="err">Request timeout for icmp_seq 1</span>
+      </div>
+      <div class="line" id="l4">
+        <span class="muted">--- google.com ping statistics ---</span>
+      </div>
+      <div class="line" id="l5">
+        <span class="err">3 packets transmitted, 0 received, 100% packet loss</span>
+      </div>
+
+      <div class="line" id="l6">&nbsp;</div>
+
+      <div class="line" id="l7">
+        <span class="prompt">chinmay@portfolio</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span class="cmd">npm run dev</span>
+      </div>
+      <div class="line" id="l8">
+        <span class="err">✗ ERR_NETWORK_UNREACHABLE — No internet connection</span>
+      </div>
+
+      <div class="line" id="l9">&nbsp;</div>
+
+      <div class="line" id="l10">
+        <span class="prompt">chinmay@portfolio</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span class="cmd">git commit -m <span class="success">"fix: reconnect to earth"</span></span>
+      </div>
+      <div class="line" id="l11">
+        <span class="warn">On branch main — waiting for signal</span>
+        <span class="cursor"></span>
+      </div>
+
+    </div>
+
+    <div class="btn-wrap">
+      <a class="btn" onclick="window.location.reload()">↺ retry connection</a>
+    </div>
+
+    <div class="badge">CS · portfolio · ERR_OFFLINE · 👨‍🚀</div>
+  </div>
+
+  <script>
+    const delays = [0, 400, 900, 1300, 1700, 2100, 2500, 2900, 3300, 3700, 4100, 4600];
+    delays.forEach((d, i) => {
+      setTimeout(() => {
+        const el = document.getElementById("l" + i);
+        if (el) el.classList.add("show");
+      }, d);
+    });
+  </script>
+</body>
+</html>
