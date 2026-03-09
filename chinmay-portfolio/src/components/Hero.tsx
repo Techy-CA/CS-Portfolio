@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useRef, useState } from "react";
 import { personal } from "../data/portfolioData";
 import ParticleOrb from "./ParticleOrb";
 
@@ -70,11 +70,11 @@ const MARQUEE_ITEMS = [
 ];
 
 const Hero = () => {
-  const dotRef   = useRef<HTMLDivElement>(null);
-  const ringRef  = useRef<HTMLDivElement>(null);
-  const mouse    = useRef({ x: -200, y: -200 });
-  const trail    = useRef({ x: -200, y: -200 });
-  const rafRef   = useRef<number>(0);
+  const dotRef  = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const mouse   = useRef({ x: -200, y: -200 });
+  const trail   = useRef({ x: -200, y: -200 });
+  const rafRef  = useRef<number>(0);
   const [hoverName, setHoverName] = useState(false);
   const [revealed, setRevealed]   = useState(false);
   const isMobile = useIsMobile();
@@ -126,7 +126,6 @@ const Hero = () => {
 
       <div className="noise-overlay" />
 
-      {/* ── Hero: exact 100vh, no overflow scroll ── */}
       <section id="home" style={{
         height: "100vh",
         display: "flex",
@@ -161,30 +160,35 @@ const Hero = () => {
           </>
         )}
 
-        {/* ── Main content area: fills space between navbar and marquee ── */}
         <div className="container" style={{
           flex: 1,
           display: "flex",
-          alignItems: "center",       // ← vertical center
+          alignItems: "center",
+          justifyContent: isMobile ? "center" : "flex-start",
           position: "relative",
           paddingTop: 0,
           paddingBottom: 0,
-          minHeight: 0,              // ← important: allows flex child to shrink
-          overflow: "hidden",             
+          minHeight: 0,
+          overflow: "hidden",
         }}>
 
-          {/* Two-col: LEFT = text | RIGHT = Lanyard */}
           <div style={{
             display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-            gap: isMobile ? "20px" : "0px",
+            gap: 0,
             alignItems: "center",
             width: "100%",
             height: "100%",
           }}>
 
-            {/* ── LEFT ── */}
-            <div style={{ paddingRight: isMobile ? 0 : "40px" }}>
+            {/* ── LEFT / CENTRE (mobile) ── */}
+            <div style={{
+              paddingRight: isMobile ? 0 : "40px",
+              textAlign: isMobile ? "center" : "left",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: isMobile ? "center" : "flex-start",
+            }}>
 
               {/* Name */}
               <div
@@ -201,6 +205,7 @@ const Hero = () => {
                   color: "transparent",
                   WebkitTextStroke: "1px rgba(230,57,70,0.15)",
                   userSelect: "none", pointerEvents: "none", lineHeight: 0.9,
+                  textAlign: isMobile ? "center" : "left", width: "100%",
                 }}>
                   <div>CHINMAY</div>
                   <div>SUGANDHI</div>
@@ -226,7 +231,6 @@ const Hero = () => {
                       {firstName || "CHINMAY"}
                     </span>
                   </div>
-
                   <div style={{
                     overflow: "hidden",
                     opacity: revealed ? 1 : 0,
@@ -244,6 +248,7 @@ const Hero = () => {
                   </div>
                 </h1>
 
+                {/* Red bar */}
                 <div style={{
                   height: 4, background: "#e63946", marginTop: 8,
                   width: revealed ? (isMobile ? "55%" : "42%") : "0%",
@@ -256,7 +261,7 @@ const Hero = () => {
                 opacity: revealed ? 1 : 0,
                 transform: revealed ? "translateY(0)" : "translateY(20px)",
                 transition: "opacity 0.7s ease 0.9s, transform 0.7s ease 0.9s",
-                marginBottom: isMobile ? 16 : 20,
+                marginBottom: isMobile ? 20 : 20,
               }}>
                 <p style={{
                   fontFamily: "var(--font-sans)",
@@ -271,19 +276,22 @@ const Hero = () => {
 
               {/* Counters */}
               <div style={{
-                display: "flex", gap: isMobile ? 20 : 36,
-                paddingTop: 16, borderTop: "1px solid #ddd",
+                display: "flex",
+                gap: isMobile ? 28 : 36,
+                justifyContent: isMobile ? "center" : "flex-start",
+                paddingTop: 16,
+                borderTop: "1px solid #ddd",
                 opacity: revealed ? 1 : 0,
                 transform: revealed ? "translateY(0)" : "translateY(16px)",
                 transition: "opacity 0.6s ease 1.1s, transform 0.6s ease 1.1s",
-                marginBottom: 16,
+                marginBottom: 20,
               }}>
                 {[
                   { to: 2,  suffix: "+", label: "Years Coding"   },
                   { to: 10, suffix: "+", label: "Projects Built" },
                   { to: 5,  suffix: "+", label: "Tech Stacks"    },
                 ].map(({ to, suffix, label }, i) => (
-                  <div key={label}>
+                  <div key={label} style={{ textAlign: "center" }}>
                     <div style={{
                       fontFamily: "var(--font-mono)",
                       fontSize: isMobile ? "1.5rem" : "2rem",
@@ -306,6 +314,7 @@ const Hero = () => {
               {/* CTAs */}
               <div style={{
                 display: "flex", gap: "10px", flexWrap: "wrap",
+                justifyContent: isMobile ? "center" : "flex-start",
                 opacity: revealed ? 1 : 0,
                 transform: revealed ? "translateY(0)" : "translateY(16px)",
                 transition: "opacity 0.6s ease 1.3s, transform 0.6s ease 1.3s",
@@ -329,6 +338,7 @@ const Hero = () => {
               <div style={{
                 display: "flex", gap: "16px",
                 alignItems: "center", flexWrap: "wrap",
+                justifyContent: isMobile ? "center" : "flex-start",
                 opacity: revealed ? 1 : 0,
                 transition: "opacity 0.6s ease 1.5s",
               }}>
@@ -361,37 +371,27 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* ── RIGHT: Lanyard (desktop only) ── */}
-{!isMobile && (
-  <div style={{
-    height: "100%",
-    minHeight: 0,
-    opacity: revealed ? 1 : 0,
-    transition: "opacity 1s ease 1.2s",
-    position: "relative",
-  }}>
-    <ParticleOrb />
-  </div>
-)}
-
-
-
+            {/* ── RIGHT: Orb desktop only ── */}
+            {!isMobile && (
+              <div style={{
+                height: "100%", minHeight: 0,
+                opacity: revealed ? 1 : 0,
+                transition: "opacity 1s ease 1.2s",
+                position: "relative",
+              }}>
+                <ParticleOrb />
+              </div>
+            )}
 
           </div>
         </div>
 
-        {/* ── MARQUEE: pinned exactly at bottom of 100vh ── */}
+        {/* ── MARQUEE ── */}
         <div style={{
-  position: "absolute",        // ← YAHI FIX HAI
-  bottom: 0,                   // ← exactly bottom pe
-  left: 0,
-  right: 0,
-  background: "#1a1a1a",
-  borderTop: "2px solid #1a1a1a",
-  padding: "10px 0",
-  overflow: "hidden",
-  zIndex: 10,
-}}>
+          position: "absolute", bottom: 0, left: 0, right: 0,
+          background: "#1a1a1a", borderTop: "2px solid #1a1a1a",
+          padding: "10px 0", overflow: "hidden", zIndex: 10,
+        }}>
           <div className="marquee-wrapper">
             <div className="marquee-track">
               {MARQUEE_ITEMS.map((item, i) => (
@@ -415,6 +415,7 @@ const Hero = () => {
             </div>
           </div>
         </div>
+
       </section>
     </>
   );
