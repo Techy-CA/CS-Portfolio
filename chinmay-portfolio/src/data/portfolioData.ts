@@ -19,7 +19,7 @@ export const personal = {
   bio3: `Apart from development, I'm also involved in FRNT Media - working on software solutions, influencer marketing, and digital growth systems for businesses.`,
   bio4: `Right now my focus is simple: build useful products, learn fast, and solve real problems with technology.`,
 
-  email: "chinmay.sugandhi@email.com",
+  email: "chinmayysugandhi@gmail.com",
   github: "https://github.com/chinmaysugandhi",
   linkedin: "https://linkedin.com/in/chinmaysugandhi",
   twitter: "https://twitter.com/chinmaysugandhi",

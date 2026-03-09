@@ -287,8 +287,8 @@ const Hero = () => {
                 marginBottom: 20,
               }}>
                 {[
-                  { to: 2,  suffix: "+", label: "Years Coding"   },
-                  { to: 10, suffix: "+", label: "Projects Built" },
+                  { to: 1,  suffix: "+", label: "Years Coding"   },
+                  { to: 5, suffix: "+", label: "Projects Built" },
                   { to: 5,  suffix: "+", label: "Tech Stacks"    },
                 ].map(({ to, suffix, label }, i) => (
                   <div key={label} style={{ textAlign: "center" }}>
@@ -334,7 +334,7 @@ const Hero = () => {
                 </a>
               </div>
 
-              {/* Socials */}
+              {/* Socials
               <div style={{
                 display: "flex", gap: "16px",
                 alignItems: "center", flexWrap: "wrap",
@@ -368,7 +368,7 @@ const Hero = () => {
                     {label} &uarr;
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             {/* ── RIGHT: Orb desktop only ── */}

@@ -128,7 +128,7 @@ const About = () => {
                 lineHeight: 1.7,
                 margin: "0 0 12px 0",
               }}>
-                A gifting startup focused on corporate &amp; personal gifting — making gifting thoughtful, seamless, and scalable.
+                A gifting startup focused on corporate &amp; personal gifting - making gifting thoughtful, seamless, and scalable.
               </p>
               <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                 {["Corporate Gifting", "Personal Gifting", "Startup"].map((t) => (
@@ -182,7 +182,7 @@ const About = () => {
                   letterSpacing: "0.14em",
                   fontWeight: 700,
                 }}>
-                  Co-Founder
+                  Founder & CEO
                 </div>
                 <span style={{
                   fontFamily: "var(--font-mono)",
@@ -271,7 +271,6 @@ const About = () => {
               {[
                 { label: "GitHub",   href: personal.github },
                 { label: "LinkedIn", href: personal.linkedin },
-                { label: "Twitter",  href: personal.twitter },
                 { label: "Email",    href: `mailto:${personal.email}` },
               ].map(({ label, href }) => (
                 <a
