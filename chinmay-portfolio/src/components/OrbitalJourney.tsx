@@ -14,66 +14,80 @@ interface ExperienceNode {
 const experienceData: ExperienceNode[] = [
   {
     id: 1,
-    title: "HackNITK",
-    type: "National Hackathon",
-    year: "2024",
-    position: "Top 10 Finalist",
-    description: "Built a real-time collaborative code editor with live execution, supporting 5 languages. Competed against 300+ teams from across India.",
-    skills: ["React", "Node.js", "WebSockets"],
+    title: "Codeversity",
+    type: "National Level Hackathon",
+    year: "2026",
+    position: "Final Round Qualifier",
+    description: "Participated in the Codeversity National Level Hackathon at IIT Gandhinagar. Collaborated with my team to develop and present a solution under tight timelines while competing with teams from across the country.",
+    skills: ["Problem Solving", "Team Collaboration", "Rapid Prototyping"],
     color: "#e63946",
   },
   {
     id: 2,
-    title: "DevSprint",
-    type: "College Hackathon",
-    year: "2023",
-    position: "1st Place 🏆",
-    description: "Won with an AI-powered resume screener that parsed PDFs and ranked candidates using NLP. Built end-to-end in 12 hours.",
-    skills: ["Python", "Flask", "NLP"],
+    title: "AI Workshop",
+    type: "Artificial Intelligence Workshop",
+    year: "2026",
+    position: "Certified Participant",
+    description: "Received certification for the Artificial Intelligence workshop conducted during Codeversity at IIT Gandhinagar, gaining exposure to AI concepts and emerging technologies.",
+    skills: ["Artificial Intelligence", "AI Tools", "Tech Exploration"],
     color: "#3a86ff",
   },
   {
     id: 3,
-    title: "Build With AI",
-    type: "Google Event",
-    year: "2024",
-    position: "Participant",
-    description: "Attended Google's Build With AI workshop. Explored Gemini APIs, built a study assistant chatbot with context-aware responses.",
-    skills: ["Gemini API", "React", "TypeScript"],
+    title: "Yugantar 2.0",
+    type: "Inter Institute Hackathon",
+    year: "2025",
+    position: "Hackathon Participant",
+    description: "Participated in Yugantar 2.0 hackathon at NMIMS Shirpur, working with teammates to develop a solution within a limited time frame and present it to mentors and judges.",
+    skills: ["Teamwork", "Problem Solving", "Idea Development"],
     color: "#2a9d5c",
   },
   {
     id: 4,
-    title: "OpenCode",
-    type: "Open Source Month",
-    year: "2023",
-    position: "Top Contributor",
-    description: "Contributed to 6 open source repos during a month-long college OSS event. Merged 9 PRs — UI fixes, docs, and a new feature.",
-    skills: ["Git", "React", "MongoDB"],
+    title: "Gen AI Mastermind",
+    type: "AI Learning Program",
+    year: "2025",
+    position: "Program Completion",
+    description: "Completed the Generative AI Mastermind program by Outskill, exploring practical applications of generative AI tools and their use in productivity and automation workflows.",
+    skills: ["Generative AI", "AI Automation", "AI Workflows"],
     color: "#ff9f1c",
   },
   {
     id: 5,
-    title: "Lone Wolf",
-    type: "Solo Hackathon",
-    year: "2024",
-    position: "2nd Place 🥈",
-    description: "Solo category — built a dev portfolio generator from GitHub username. Auto-fetches repos, generates a live site in seconds.",
-    skills: ["Next.js", "GitHub API", "Tailwind"],
+    title: "EcomFest 2026",
+    type: "Ecommerce Industry Event",
+    year: "2025",
+    position: "Industry Event Attendee",
+    description: "Attended EcomFest 2026 in Dehradun, India's largest seller-focused ecommerce event. Gained insights into how sellers scale businesses on Amazon, Flipkart, and Meesho.",
+    skills: ["Ecommerce Strategy", "Marketplace Business", "Seller Ecosystem"],
     color: "#8338ec",
+  },
+  {
+    id: 6,
+    title: "EKA",
+    type: "Entrepreneurial Project",
+    year: "2024",
+    position: "Website Launched",
+    description: "Building EKA, a brand focused on personalized corporate gifting. Working on product development, ecommerce operations, logistics systems, and internal team coordination.",
+    skills: ["Product Building", "Logistics Management", "Ecommerce Operations"],
+    color: "#f4a261",
   },
 ];
 
 const getBadgeStyle = (position: string) => {
+  if (position.includes("Final Round") || position.includes("Qualifier"))
+    return { bg: "#fff0f1", color: "#e63946", border: "#e63946" };
   if (position.includes("1st") || position.includes("Won"))
-    return { bg: "#fff9ed", color: "#e67e00",  border: "#f4a261" };
+    return { bg: "#fff9ed", color: "#e67e00", border: "#f4a261" };
   if (position.includes("2nd"))
-    return { bg: "#f4f4f4", color: "#555",     border: "#999"    };
-  if (position.includes("Contributor"))
-    return { bg: "#f0fff4", color: "#2a9d5c",  border: "#2a9d5c" };
-  if (position.includes("Finalist") || position.includes("Top"))
-    return { bg: "#fff0f1", color: "#e63946",  border: "#e63946" };
-  return   { bg: "#f5f5f5", color: "#777",     border: "#ccc"    };
+    return { bg: "#f4f4f4", color: "#555", border: "#999" };
+  if (position.includes("Certified") || position.includes("Completion"))
+    return { bg: "#eef4ff", color: "#3a86ff", border: "#3a86ff" };
+  if (position.includes("Contributor") || position.includes("Top"))
+    return { bg: "#f0fff4", color: "#2a9d5c", border: "#2a9d5c" };
+  if (position.includes("Launched"))
+    return { bg: "#fff5ee", color: "#f4a261", border: "#f4a261" };
+  return { bg: "#f5f5f5", color: "#777", border: "#ccc" };
 };
 
 const useIsMobile = () => {
@@ -89,9 +103,9 @@ const useIsMobile = () => {
 
 const OrbitalExperience = () => {
   const isMobile = useIsMobile();
-  const [rotation, setRotation]   = useState(0);
+  const [rotation, setRotation]     = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
-  const [activeId, setActiveId]   = useState<number | null>(null);
+  const [activeId, setActiveId]     = useState<number | null>(null);
   const rafRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -393,12 +407,12 @@ const OrbitalExperience = () => {
               </div>
 
             ) : (
-              /* ── Idle panel ── */
+              /* ── Idle panel — short ── */
               <div style={{
                 border: "2px solid #1a1a1a",
                 boxShadow: "6px 6px 0 #1a1a1a",
                 background: "#fff",
-                padding: isMobile ? "20px 16px" : "32px 24px",
+                padding: isMobile ? "16px" : "20px 24px",
               }}>
                 <div style={{
                   fontFamily: "var(--font-mono)", fontSize: "0.65rem",
@@ -407,15 +421,8 @@ const OrbitalExperience = () => {
                 }}>
                   / Events &amp; Hackathons
                 </div>
-                <p style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: isMobile ? "0.82rem" : "0.95rem",
-                  lineHeight: 1.85, color: "#555", marginBottom: "20px",
-                }}>
-                  Click any orbiting node to explore events, achievements &amp; skills used.
-                </p>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
                   {experienceData.map((node) => {
                     const badge = getBadgeStyle(node.position);
                     return (
@@ -424,41 +431,32 @@ const OrbitalExperience = () => {
                         onClick={(e) => handleNodeClick(node.id, e)}
                         style={{
                           display: "flex", alignItems: "center",
-                          gap: "12px", cursor: "pointer",
-                          padding: "6px 0", borderBottom: "1px solid #ede9e2",
+                          gap: "10px", cursor: "pointer",
+                          padding: "8px 0",
+                          borderBottom: "1px solid #ede9e2",
                         }}
                       >
                         <div style={{
-                          width: 8, height: 8, borderRadius: "50%",
+                          width: 7, height: 7, borderRadius: "50%",
                           background: node.color, flexShrink: 0,
                         }} />
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <span style={{
-                            fontFamily: "var(--font-mono)",
-                            fontSize: "0.72rem", fontWeight: 700,
-                            textTransform: "uppercase", letterSpacing: "0.08em",
-                            display: "block",
-                          }}>
-                            {node.title}
-                          </span>
-                          <span style={{
-                            fontFamily: "var(--font-mono)",
-                            fontSize: "0.58rem", color: "#aaa",
-                            textTransform: "uppercase", letterSpacing: "0.06em",
-                          }}>
-                            {node.type}
-                          </span>
-                        </div>
                         <span style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: "0.6rem", color: "#bbb",
+                          fontFamily: "var(--font-mono)", fontSize: "0.7rem",
+                          fontWeight: 700, textTransform: "uppercase",
+                          letterSpacing: "0.06em", flex: 1,
+                        }}>
+                          {node.title}
+                        </span>
+                        <span style={{
+                          fontFamily: "var(--font-mono)", fontSize: "0.58rem",
+                          color: "#bbb", flexShrink: 0,
                         }}>
                           {node.year}
                         </span>
                         <span style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: "0.6rem", fontWeight: 700,
-                          color: badge.color, whiteSpace: "nowrap",
+                          fontFamily: "var(--font-mono)", fontSize: "0.58rem",
+                          fontWeight: 700, color: badge.color,
+                          flexShrink: 0, whiteSpace: "nowrap",
                         }}>
                           {node.position.split(" ").slice(0, 2).join(" ")}
                         </span>
